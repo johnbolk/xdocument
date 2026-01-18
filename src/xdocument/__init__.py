@@ -6,6 +6,6 @@ This package provides the following class definitions:
 * XElement  - A defined class which represents an XML document element
 """
 
-__version__ = '1.3.1'
+__version__ = '1.3.2'
 
 from .xdocument import XDocument, XElement

@@ -6,7 +6,7 @@ This module provides the following class definitions:
 * XElement  - A defined class which represents an XML document element
 """
 
-__version__ = '1.3.1'
+__version__ = '1.3.2'
 
 import os
 from typing import Any, List, Union
@@ -605,13 +605,7 @@ class XDocument:
             The full filename of the specified XML document file
         """
         self._filename = filename
-        if os.path.isfile(filename):  # Read the XML document file
-            self._doc = defused.parse(self._filename)
-            root_node = self._doc.documentElement
-            if isinstance(root_node, Element):
-                self._root = root_node
-
-        else:  # Create a new default XML document
+        if not os.path.isfile(filename):  # Create a new default XML document
             ipl = getDOMImplementation()
             if ipl is not None:
                 self._doc = ipl.createDocument(None, self._root_name, None)
@@ -621,6 +615,11 @@ class XDocument:
                     if self._initialize:  # Provide the subclass details
                         self._subclass_details()
                         self.save()
+
+        self._doc = defused.parse(self._filename)  # Read the XML document file
+        root_node = self._doc.documentElement
+        if isinstance(root_node, Element):
+            self._root = root_node
 
     def save(self, filename: str = '') -> None:
         """Save the XML document to the specified XML document file.
