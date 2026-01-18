@@ -6,7 +6,7 @@ This module provides the following class definitions:
 * XElement  - A defined class which represents an XML document element
 """
 
-__version__ = '1.3.0'
+__version__ = '1.3.1'
 
 import os
 from typing import Any, List, Union
@@ -523,7 +523,7 @@ class XElement:
 
 
 class XDocument:
-    """The base functionality class for creating and saving an XML document."""
+    """A class for creating, loading, and saving an XML document."""
 
     _filename: str  # The XML document filename
     _doc: Document  # The XML document
