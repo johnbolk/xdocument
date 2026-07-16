@@ -106,18 +106,24 @@ else:  # Read and print the contents of the XML document
 
 The reader is encouraged to make changes to the "Simple.xml" file by carefully editing the attribute value of the Child element (the quotation marks are required) and/or the text value of the GrandChild element. The reader should save these changes to the "Simple.xml" file and then run the script again to observe the results. In the event that these changes result in a file that cannot be successfully loaded; simply delete the "Simple.xml" file, and run the script to recreate the original "Simple.xml" file.
 
+<div class="page"/>
+
+This page intentionally left blank.
+
+<div class="page"/>
+
 # Documentation
 
 ## XDocument
 
-### XDocument( *filename, root_name=' ', comment=' ', details=None* )
+### XDocument( *filename*, *root_name*=' ', *comment*=' ', *details*=None )
 
 Create an XML document from the specified XML document file. If the specified XML document file does not exist, a new XML Document is created, initialized, and saved as a new XML document file.
 
-* ***filename -*** The full filename of the specified XML document file.
-* ***root_name -*** The optional XML document root name (the default is the class name).
-* ***comment -*** The optional XML document comment text string.
-* ***details -*** The optional initialization details for the derived subclass.
+* ***filename* : str -** The full filename of the specified XML document file.
+* ***root_name* : str -** The XML document root name, **the default is the class name.**
+* ***comment* : str -** The XML document comment text string, **the default is no comment.**
+* ***details* : Any | None -** The optional initialization details for the derived subclass, **the default is None.**
 
 **_subclass_details( ) -** This method can be used to provide the initialization details for a derived subclass.
 
@@ -130,21 +136,21 @@ This method is only called during the class initialization when the specified XM
 
 ### Properties
 
-* **root -** The root element of the XML Document ( readonly ).
+* **root : XElement -** The root element of the XML Document ( readonly ).
 
 ### Methods
 
-* **create_element( *name* ) -** Create a new element for the XML document. This method returns the newly created element.
+* **create_element( *name* ) -> XElement :** Create a new element for the XML document. This method returns the newly created element.
 
-    * ***name*** - The name of the element.
+    * ***name* : str -** The name of the element.
 
-* **load( *filename* ) -** Load a new XML document from the specified XML document file. If the file does not exist, this method creates a blank XML document which contains only the root element.
+* **load( *filename* ) :** Load a new XML document from the specified XML document file. If the file does not exist, this method creates a blank XML document which contains only the root element.
 
-    * ***filename*** - The full filename of the specified XML document file.
+    * ***filename* : str -** The full filename of the specified XML document file.
 
-* **save( *filename=' '* ) -** Save the XML document to the specified XML document file.
+* **save( *filename*=' ' ) :** Save the XML document to the specified XML document file.
 
-    * ***filename*** - The optional filename ( the default is the current filename ).
+    * ***filename* : str -** The optional filename ( the default is the current filename ).
 
 <div class="page"/>
 
@@ -154,18 +160,18 @@ Every element of the XML document is an instance of the **XElement** class, and 
 
 ### Properties
 
-* **attributes -** A list of all the attributes of this element ( readonly ).
-* **children -** A list of all the child elements of this element ( readonly ).
-* **first_attribute -** The first attribute of this element ( readonly ).
-* **first_child -** The first child of this element ( readonly ).
-* **has_attributes -** True if this element has at least one attribute ( readonly ).
-* **has_children -**  True if this element has at least one child ( readonly ).
-* **last_attribute -** The last attribute of this element ( readonly ).
-* **last_child -** The last child of this element ( readonly ).
-* **level -** The zero-based depth of this element in the hierarchy ( readonly ).
-* **name -** The name of this element ( read / write ).
-* **parent -** The parent element of this element ( readonly ).
-* **value -** The text content of this element ( read / write ).
+* **attributes : list[str] -** A list of all the attributes of this element ( readonly ).
+* **children : list[XElement] -** A list of all the child elements of this element ( readonly ).
+* **first_attribute : str -** The first attribute of this element ( readonly ).
+* **first_child : XElement | None -** The first child of this element ( readonly ).
+* **has_attributes : bool -** The value is **True** if this element has at least one attribute ( readonly ).
+* **has_children : bool -** The value is **True** if this element has at least one child ( readonly ).
+* **last_attribute : str -** The last attribute of this element ( readonly ).
+* **last_child : XElement | None -** The last child of this element ( readonly ).
+* **level : int -** The zero-based depth of this element in the hierarchy ( readonly ).
+* **name : str -** The name of this element ( read / write ).
+* **parent : XElement | None -** The parent element of this element ( readonly ).
+* **value : str -** The text content of this element ( read / write ).
 
 **Notes:**
 1. The **first_child** and **last_child** properties evaluate to **None** if that child does not exist.
@@ -173,80 +179,80 @@ Every element of the XML document is an instance of the **XElement** class, and 
 
 ### Methods
 
-* **add( *name, attr= ' ', value=None* ) -** Create and add a new child element. This method returns the newly created child element.
+* **add( *name*, *attr*=' ', *value*=None ) -> XElement :** Create and add a new child element. This method returns the newly created child element.
 
-    * ***name* -** The name of the element.
-    * ***attr* -** The name of the optional attribute.
-    * ***value* -** The value of the optional attribute.
+    * ***name* : str -** The name of the element.
+    * ***attr* : str -** The name of the optional attribute, **the default is no attribute name.**.
+    * ***value* : Any | None -** The value of the optional attribute, **the default is no attribute value.**
 
-* **add_comment( *text_field* ) -** Create and add a comment to the element.
+* **add_comment( *text_field* ) :** Create and add a comment to the element.
 
-    * ***text_field* -** The text field of the comment.
+    * ***text_field* : str -** The text field of the comment.
 
-* **add_element( *element* ) -**  Add an existing element as a child element. This method returns the added child element
+* **add_element( *element* ) -> XElement :**  Add an existing element as a child element. This method returns the added child element
 
-    * ***element* -** The existing element.
+    * ***element* : XElement -** The existing element.
 
-* **clone( *deep=True* ) -** Create and return a copy of this element.
+* **clone( *deep*=True ) -> XElement :** Create and return a copy of this element.
 
-    * ***deep* -** if True, include all the descendant elements ( default = True )
-
-<div class="page"/>
-
-* **find_child( *name* ) -** Find the first child of this element with the specified name. This method returns the first matching child element if found, otherwise **None.**
-
-    * ***name* -** The specified name of the child element.
-
-* **find_descendants( _name=' * '_ ) -** Find all the descendants of this element with the specified name. This method returns a list of all descendant elements with the specified name.
-
-    * ***name* -** The specified name ( include all descendants if the name is **' * '** ).
-
-* **insert_element( *ref_element, new_element* ) -** Insert a new child element before the referenced child element. This method returns the newly inserted child element.
-
-    * ***ref_element* -** The existing referenced child.
-    * ***new_element* -** The element to be inserted.
-
-* **read_attribute( *name* ) -** Read the value of the named attribute. This method returns the value of the attribute if found, otherwise an empty string.
-
-    * ***name* -** The name of the attribute.
-
-* **read_child( *name, default=None* ) -** Read the value of the named child element. The default parameter value type determines the return value type. When the default parameter is **None,** the return value type is a string. This method returns the value of the child if found, otherwise the default value.
-
-    * ***name* -** The name of the child element.
-    * ***default* -** The default return value ( **None** equates to an empty string ).
-
-* **remove( *name* ) -** Remove the named child element. This method returns the removed child element if successful, otherwise **None.**
-
-    * ***name* -** The name of the child element.
-
-* **remove_all() -** Remove all children and comments from this element.
-
-* **remove_all_attributes() -** Remove all attributes from this element.
-
-* **remove_attribute( *name* ) -** Remove the named attribute from this element.
-
-    * ***name* -** The name of the attribute.
-
-* **remove_element( *element* ) -** Remove the specified child element. This method returns the removed child element if successful, otherwise **None.**
-
-    * ***element* -** The specified child element.
+    * ***deep* : bool -** If **True,** include all the descendant elements, **the default is True.**
 
 <div class="page"/>
 
-* **replace_element( *old_element, new_element* ) -** Replace an existing child element with a new child element. This method returns the new child element.
+* **find_child( *name* ) -> XElement | None :** Find the first child of this element with the specified name. This method returns the first matching child element if found, otherwise **None.**
 
-    * ***old_element* -** The existing child element.
-    * ***new_element* -** The replacement child element.
+    * ***name* : str -** The specified name of the child element.
 
-* **write_attribute( *name, value* ) -** Write a new value to the named attribute. If the named attribute does not exist, a new attribute is created and added to the element.
+* **find_descendants( _name_=' * ' ) -> list[XElement] :** Find all the descendants of this element with the specified name. This method returns a list of all descendant elements with the specified name.
 
-    * ***name* -** The name of the attribute.
-    * ***value* -** The new value of the attribute.
+    * ***name* : str -** The specified name ( include all descendants if the name is **' * '** ).
 
-* **write_child( *name, value* ) -** Write a new value to the named child element. If the named child element does not exist, a new child element is created and added to the element.
+* **insert_element( *ref_element*, *new_element* ) -> XElement :** Insert a new child element before the referenced child element. This method returns the newly inserted child element.
 
-    * ***name* -** The name of the child element.
-    * ***value* -** The new value of the named child element.
+    * ***ref_element* : XElement -** The existing referenced child.
+    * ***new_element* : XElement -** The element to be inserted.
+
+* **read_attribute( *name* ) -> str :** Read the value of the named attribute. This method returns the value of the attribute if found, otherwise an empty string.
+
+    * ***name* : str -** The name of the attribute.
+
+* **read_child( *name*, *default*=None ) -> Any :** Read the value of the named child element. The default parameter value type determines the return value type. When the default parameter is **None,** the return value type is a string. This method returns the value of the child if found, otherwise the default value.
+
+    * ***name* : str -** The name of the child element.
+    * ***default* : Any | None -** The default return value ( **None** equates to an empty string ).
+
+* **remove( *name* ) -> XElement | None :** Remove the named child element. This method returns the removed child element if successful, otherwise **None.**
+
+    * ***name* : str -** The name of the child element.
+
+* **remove_all( ) :** Remove all children and comments from this element.
+
+* **remove_all_attributes( ) :** Remove all attributes from this element.
+
+* **remove_attribute( *name* ) :** Remove the named attribute from this element.
+
+    * ***name* : str -** The name of the attribute.
+
+* **remove_element( *element* ) -> XElement | None :** Remove the specified child element. This method returns the removed child element if successful, otherwise **None.**
+
+    * ***element* : XElement -** The specified child element.
+
+<div class="page"/>
+
+* **replace_element( *old_element*, *new_element* ) -> XElement :** Replace an existing child element with a new child element. This method returns the new child element.
+
+    * ***old_element* : XElement -** The existing child element.
+    * ***new_element* : XElement -** The replacement child element.
+
+* **write_attribute( *name, value* ) :** Write a new value to the named attribute. If the named attribute does not exist, a new attribute is created and added to the element.
+
+    * ***name* : str -** The name of the attribute.
+    * ***value* : Any -** The new value of the attribute.
+
+* **write_child( *name*, *value* ) :** Write a new value to the named child element. If the named child element does not exist, a new child element is created and added to the element.
+
+    * ***name* : str -** The name of the child element.
+    * ***value* : Any -** The new value of the named child element.
 
 # XDocument Usage Example
 
@@ -255,9 +261,9 @@ XML document files are often used by application programs to record their config
 1) Record the configuration information contained in a dataclass to an XML document file.
 2) Retrieve the configuration information contained in the XML document file back to the dataclass.
 
-This example demonstrates how to create a python module which can provide that capability to a program.
+This example demonstrates how to create a python module which can provide that capability to a program. The source file for this example, **config_data.py**, is provided in the examples folder.
 
-The following is the **config_data.py** module:
+<div class="page"/>
 
 ```
 from dataclasses import asdict
@@ -315,8 +321,6 @@ The **write( *dataclass* )** method records the configuration information by wri
 The **class_name( *dataclass* )** function provides the name of the referenced dataclass.
 
 Use of the **pascal_case( *attribute_name* )** function allows for a consistent naming style throughout the XML document.
-
-<div class="page"/>
 
 The following script uses the **ConfigData** class for exchanging configuration information between a dataclass and an XML document file:
 
