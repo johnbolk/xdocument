@@ -108,10 +108,6 @@ The reader is encouraged to make changes to the "Simple.xml" file by carefully e
 
 <div class="page"/>
 
-This page intentionally left blank.
-
-<div class="page"/>
-
 # Documentation
 
 ## XDocument
@@ -161,6 +157,7 @@ Every element of the XML document is an instance of the **XElement** class, and 
 ### Properties
 
 * **attributes : list[str] -** A list of all the attributes of this element ( readonly ).
+* **attribute_names: list[str] -** A list of all the attribute names of this element ( readonly ).
 * **children : list[XElement] -** A list of all the child elements of this element ( readonly ).
 * **first_attribute : str -** The first attribute of this element ( readonly ).
 * **first_child : XElement | None -** The first child of this element ( readonly ).
@@ -261,7 +258,8 @@ XML document files are often used by application programs to record their config
 1) Record the configuration information contained in a dataclass to an XML document file.
 2) Retrieve the configuration information contained in the XML document file back to the dataclass.
 
-This example demonstrates how to create a python module which can provide that capability to a program. The source file for this example, **config_data.py**, is provided in the examples folder.
+This example demonstrates how to create a python module which can provide that capability to a program. The
+source file for this example, **config_data.py**, is provided in the examples folder.
 
 <div class="page"/>
 

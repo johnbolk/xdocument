@@ -6,7 +6,7 @@ This module provides the following class definitions:
 * XElement  - A defined class which represents an XML document element
 """
 
-__version__ = '1.3.2'
+__version__ = '1.3.3'
 
 import os
 from typing import Any, List, Union
@@ -51,6 +51,14 @@ class XElement:
                 value = self.read_attribute(name)
                 attribute_list.append(f'{name}="{value}"')
         return attribute_list
+
+    @property
+    def attribute_names(self) -> List[str]:
+        """Get a list of all the attribute names of this element."""
+        name_list: List[str] = []
+        if self._node.hasAttributes():
+            name_list = [name for name in self._get_attributes().keys()]
+        return name_list
 
     @property
     def children(self) -> List['XElement']:
