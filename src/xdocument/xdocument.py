@@ -6,10 +6,12 @@ This module provides the following class definitions:
 * XElement  - A defined class which represents an XML document element
 """
 
-__version__ = '1.3.3'
+from __future__ import annotations
+
+__version__ = '1.3.4'
 
 import os
-from typing import Any, List, Union
+from typing import Any, List, Dict, Optional
 from xml.dom.minidom import getDOMImplementation, Document, Element, Text
 import defusedxml.minidom as defused
 
@@ -61,7 +63,7 @@ class XElement:
         return name_list
 
     @property
-    def children(self) -> List['XElement']:
+    def children(self) -> List[XElement]:
         """Get a list of all the child elements of this element."""
         child_list: List[XElement] = []
         for node in self._node.childNodes:
@@ -75,7 +77,7 @@ class XElement:
         return '' if not self._node.hasAttributes() else self.attributes[0]
 
     @property
-    def first_child(self) -> Union['XElement', None]:
+    def first_child(self) -> Optional[XElement]:
         """Get the first child element of this element."""
         return None if not self.has_children else self.children[0]
 
@@ -95,7 +97,7 @@ class XElement:
         return '' if not self._node.hasAttributes() else self.attributes[-1]
 
     @property
-    def last_child(self) -> Union['XElement', None]:
+    def last_child(self) -> Optional[XElement]:
         """Get the last child element of this element."""
         return None if not self.has_children else self.children[-1]
 
@@ -126,7 +128,7 @@ class XElement:
         return self._node
 
     @property
-    def parent(self) -> Union['XElement', None]:
+    def parent(self) -> Optional[XElement]:
         """Get the parent element of this element."""
         parent = None
         if isinstance(self._node.parentNode, Element):
@@ -156,14 +158,16 @@ class XElement:
                     self._doc.createTextNode(text), first_child
                 )
 
-    def add(self, name: str, attr: str = '', value: Any = None) -> 'XElement':
+    def add(
+        self, name: str, attr: Optional[str] = None, value: Any = None
+    ) -> XElement:
         """Create and add a new child element.
 
         Parameters
         ----------
         name : str
             The name of the child element
-        attr : str
+        attr : str | None
             The name of the optional attribute
         value : Any
             The value of the optional attribute
@@ -192,7 +196,7 @@ class XElement:
         node = self._doc.createComment(text_field.replace('--', '').strip())
         self._append_formatted_element(node)
 
-    def add_element(self, element: 'XElement') -> 'XElement':
+    def add_element(self, element: XElement) -> XElement:
         """Add an existing element as a child element.
 
         Parameters
@@ -209,7 +213,7 @@ class XElement:
             self._append_formatted_element(element.node)
         return element
 
-    def clone(self, deep: bool = True) -> 'XElement':
+    def clone(self, deep: bool = True) -> XElement:
         """Create and return a copy of this element.
 
         Parameters
@@ -237,7 +241,7 @@ class XElement:
             element.remove_all()
         return element
 
-    def find_child(self, name: str) -> Union['XElement', None]:
+    def find_child(self, name: str) -> Optional[XElement]:
         """Find the first child of this element with the specified name.
 
         Parameters
@@ -258,7 +262,7 @@ class XElement:
                 break
         return element
 
-    def find_descendants(self, name: str = '*') -> List['XElement']:
+    def find_descendants(self, name: str = '*') -> List[XElement]:
         """Find all the descendants of this element with the specified name.
 
         Parameters
@@ -275,8 +279,8 @@ class XElement:
         return [XElement(self._doc, node) for node in node_list]
 
     def insert_element(
-        self, ref_element: 'XElement', new_element: 'XElement'
-    ) -> 'XElement':
+        self, ref_element: XElement, new_element: XElement
+    ) -> XElement:
         """Insert a new child element before the referenced child element.
 
         Parameters
@@ -358,7 +362,7 @@ class XElement:
                 pass  # Return the default value
         return result
 
-    def remove(self, name: str) -> Union['XElement', None]:
+    def remove(self, name: str) -> Optional[XElement]:
         """Remove the named child element.
 
         Parameters
@@ -401,7 +405,7 @@ class XElement:
             attribute_node = self._get_attributes()[name]
             self._node.removeAttributeNode(attribute_node)
 
-    def remove_element(self, element: 'XElement') -> Union['XElement', None]:
+    def remove_element(self, element: XElement) -> Optional[XElement]:
         """Remove the specified child element.
 
         Parameters
@@ -427,8 +431,8 @@ class XElement:
         return old_element
 
     def replace_element(
-        self, old_element: 'XElement', new_element: 'XElement'
-    ) -> 'XElement':
+        self, old_element: XElement, new_element: XElement
+    ) -> XElement:
         """Replace an existing child element with a new child element.
 
         Parameters
@@ -507,7 +511,7 @@ class XElement:
             while self._node.lastChild is not None:
                 self._node.removeChild(self._node.lastChild)
 
-    def _get_attributes(self) -> dict:
+    def _get_attributes(self) -> Dict[str, Any]:
         """Get the current dictionary of the attribute nodes."""
         # noinspection PyProtectedMember
         # pylint: disable=protected-access
@@ -540,8 +544,8 @@ class XDocument:
     def __init__(
         self,
         filename: str,
-        root_name: str = '',
-        comment: str = '',
+        root_name: Optional[str] = None,
+        comment: Optional[str] = None,
         details: Any = None,
     ):
         """Create an XML document from the specified XML document file.

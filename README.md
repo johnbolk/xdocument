@@ -1,6 +1,6 @@
 # Project Description
 
-**A high-level abstraction layer for creating and editing XML documents.**
+**A high-level abstraction layer for creating, reading, and editing XML documents.**
 
 This high-level abstraction layer is implemented by using wrapper classes for the standard **xml.dom.minidom** library and the [**defusedxml**](https://pypi.org/project/defusedxml/) package. There are two wrapper classes **:**
 
@@ -112,13 +112,13 @@ The reader is encouraged to make changes to the "Simple.xml" file by carefully e
 
 ## XDocument
 
-### XDocument( *filename*, *root_name*=' ', *comment*=' ', *details*=None )
+### XDocument( *filename*, *root_name*=None, *comment*=None, *details*=None )
 
 Create an XML document from the specified XML document file. If the specified XML document file does not exist, a new XML Document is created, initialized, and saved as a new XML document file.
 
 * ***filename* : str -** The full filename of the specified XML document file.
-* ***root_name* : str -** The XML document root name, **the default is the class name.**
-* ***comment* : str -** The XML document comment text string, **the default is no comment.**
+* ***root_name* : str | None -** The XML document root name, **the default is the class name.**
+* ***comment* : str | None -** The XML document comment text string, **the default is no comment.**
 * ***details* : Any | None -** The optional initialization details for the derived subclass, **the default is None.**
 
 **_subclass_details( ) -** This method can be used to provide the initialization details for a derived subclass.
@@ -176,10 +176,10 @@ Every element of the XML document is an instance of the **XElement** class, and 
 
 ### Methods
 
-* **add( *name*, *attr*=' ', *value*=None ) -> XElement :** Create and add a new child element. This method returns the newly created child element.
+* **add( *name*, *attr*=None, *value*=None ) -> XElement :** Create and add a new child element. This method returns the newly created child element.
 
     * ***name* : str -** The name of the element.
-    * ***attr* : str -** The name of the optional attribute, **the default is no attribute name.**.
+    * ***attr* : str | None -** The name of the optional attribute, **the default is no attribute name.**.
     * ***value* : Any | None -** The value of the optional attribute, **the default is no attribute value.**
 
 * **add_comment( *text_field* ) :** Create and add a comment to the element.
